@@ -9,7 +9,9 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get(`/api`, async (req, res) => {
-  res.json({ up: true })
+  res.json({ 
+    ping: 'pong',  
+   })
 })
 
 app.get(`/api/seed`, async (req, res) => {
