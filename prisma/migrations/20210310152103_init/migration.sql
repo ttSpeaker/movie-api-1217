@@ -19,7 +19,7 @@ CREATE TABLE "Post" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Post" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
