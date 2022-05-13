@@ -15,6 +15,9 @@ router.get("/", () => {
   console.log("get all movies");
 });
 
+// /api/movies/
+router.get("/id/:id", moviesController.getById);
+
 // /api/movies/rank
 router.get("/rank", () => {
   console.log("Get ranking");

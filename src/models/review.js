@@ -1,9 +1,24 @@
-class Review {
-  constructor(score, author, content) {
-    this.score = score;
-    this.author = author;
-    this.content = content;
-  }
-}
+const prisma = require("../utils/client");
 
-module.exports = Review;
+const create = async (movieId, score, author, description) => {
+  try {
+    const review = await prisma.review.create({
+      data: {
+        score: score,
+        author: author,
+        description: description,
+        movie: {
+          connect: {
+            id: movieId,
+          },
+        },
+      },
+    });
+    return review;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
+module.exports = { create };

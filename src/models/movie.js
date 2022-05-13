@@ -47,6 +47,19 @@ const findByTitle = async (title) => {
   }
 };
 
-const getById = async (id) => {};
+const getById = async (id) => {
+  try {
+    return await prisma.movie.findUnique({
+      where: { id: id },
+      include: {
+        genres: true,
+        reviews: true,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
 
 module.exports = { create, findByTitle, getById };

@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use("/api/movies", moviesRouter);
-app.use("/api/review", reviewsRouter);
+app.use("/api/reviews", reviewsRouter);
 app.use("/api/genres", genresRouter);
 
 app.use((req, res, next) => {

@@ -31,9 +31,27 @@ const findMovieByTitle = async (req, res, next) => {
     res.statusCode = 400;
     res.send("Title cannot be empty");
   }
-  const movies = await movie.findByTitle(req.query.title);
-  console.log("Response movie", movies);
-  res.send(movies);
+  try {
+    const movies = await movie.findByTitle(req.query.title);
+    console.log("Response movie", movies);
+    res.send(movies);
+  } catch (err) {
+    console.log(err);
+    res.statusCode = 500;
+    res.send(err.message);
+  }
+};
+
+const getById = async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const movieFound = await movie.getById(id);
+    res.send(movieFound);
+  } catch (err) {
+    console.log(err);
+    res.statusCode = 500;
+    res.send(err.message);
+  }
 };
 
 const titleIsValid = (title) => {
@@ -48,4 +66,5 @@ const movieAlreadyExists = async (title) => {
 module.exports = {
   createMovie,
   findMovieByTitle,
+  getById,
 };
