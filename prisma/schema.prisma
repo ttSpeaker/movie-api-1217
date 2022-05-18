@@ -3,36 +3,38 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_MONGO_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 
 model Movie {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255) 
-  genres    Genre[]
-  reviews   Review[]
+  title     String   
+  genres    Genre[] @relation(fields: [genresIDs], references: [id])
+  genresIDs String[] @db.ObjectId
+  reviews   Review[] 
 }
  
 model Genre {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String   @db.VarChar(255)
-  movies    Movie[]
+  name      String   
+  movies    Movie[] @relation(fields: [moviesIDs], references: [id])
+  moviesIDs String[] @db.ObjectId
 }
 
 model Review {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   score       Int     
-  description String?  @db.VarChar(255)
+  description String?  
   author      String
   movie       Movie @relation(fields:[movieId], references: [id])
-  movieId     Int 
+  movieId     String @db.ObjectId
 }
